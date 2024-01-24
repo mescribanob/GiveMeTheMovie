@@ -3,8 +3,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import ipywidgets as widgets
-from IPython.display import display
+import tkinter as tk
+from tkinter import Entry, Button , Text, Scrollbar
 
 #recoger el archivo de peliculas
 movies = pd.read_csv('C:/Users/migue.DESKTOP-NTK1ITH/Desktop/ml-25m/movies.csv')
@@ -52,7 +52,7 @@ rec_percentages = pd.concat([similar_user_recs, all_user_recs], axis=1)
 rec_percentages.columns = ["similar", "all"]
 rec_percentages["score"] = rec_percentages["similar"] / rec_percentages["all"]
 rec_percentages = rec_percentages.sort_values("score", ascending=False)
-print(rec_percentages.head(10).merge(movies, left_index=True, right_on='movieId'))
+
 
 #hacemos una funcion de recomendacion que junte lo anterior
 def find_similar_movies(movie_id):
@@ -69,4 +69,45 @@ def find_similar_movies(movie_id):
     rec_percentages.columns = ["similar", "all"]
     rec_percentages["score"] = rec_percentages["similar"] / rec_percentages["all"]
     rec_percentages = rec_percentages.sort_values("score", ascending=False)
-    return rec_percentages.head(10).merge(movies, left_index=True, right_on='movieId')[["score", "title", "genres"]]
+    return rec_percentages.head(10).merge(movies, left_index=True, right_on='movieId')[["title", "genres"]]
+
+#Creamos una funcion donde el parametro de entrada sea el titulo
+def GiveMeTheMovie(movieTitle):
+    results = search(movieTitle)
+    movie_id = results.iloc[0]["movieId"]
+    return find_similar_movies(movie_id)
+
+def ejecutar_funcion():
+    # Obtener el valor del Entry
+    parametro = entry_parametro.get()
+    
+    # Llamar a la función con el parámetro
+    resultado = GiveMeTheMovie(parametro)
+
+    # Mostrar el resultado en el Text widget
+    resultado_text.delete("1.0", tk.END)  # Limpiar el contenido anterior
+    resultado_text.insert(tk.END, resultado)
+
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("Interfaz con Parámetros")
+
+# Crear un Entry para ingresar el parámetro
+entry_parametro = Entry(ventana, width=20)
+entry_parametro.pack(pady=10)
+
+# Crear un botón para ejecutar la función
+boton_ejecutar = Button(ventana, text="Ejecutar Función", command=ejecutar_funcion)
+boton_ejecutar.pack(pady=10)
+
+# Crear un Text widget para mostrar el resultado
+resultado_text = Text(ventana, height=70, width=120)
+resultado_text.pack(pady=10)
+
+# Agregar una barra de desplazamiento al Text widget
+scrollbar = Scrollbar(ventana, command=resultado_text.yview)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+resultado_text.config(yscrollcommand=scrollbar.set)
+
+# Iniciar el bucle principal de la interfaz gráfica
+ventana.mainloop()
