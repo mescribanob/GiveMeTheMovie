@@ -26,4 +26,4 @@
 
 3. Download the datasheet
    
-   [Download the folder in the repository call ml-25m](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbGJLdjFDQzlKUGF5TFRZUVZ4N1NHd2o1aXpTUXxBQ3Jtc0tuUW81MjVJMjZZemxXaXpLNjdPMml4Z0FiWnBKd1VTcENxUU9hekZUakJEOWlDbDZvNnhrSXFGU012bEZyVnFUcTJNTXI5T1dDYV90bEMzTkxiZ0ZremZ5TjYyR0dXRkRialQ1SFNlUmk2UWY3eEpLQQ&q=https%3A%2F%2Ffiles.grouplens.org%2Fdatasets%2Fmovielens%2Fml-25m.zip&v=eyEabQRBMQA)
+   [Download the folder in the repository call ml-25m](https://files.grouplens.org/datasets/movielens/ml-25m.zip)
